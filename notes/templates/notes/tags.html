@@ -1,0 +1,25 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+  <main class="container">
+    <!-- method="post" foi removido apenas para o exemplo funcionar sem o servidor -->
+    <ul class="card-container">
+        {% for note in notes %}
+        <li class="card">
+        <div>
+            <textarea class="edit-title" name="newtitle">{{note.title}}</textarea>
+            <textarea class="edit-details" name="newdetails">{{note.content}}</textarea>
+        </div>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

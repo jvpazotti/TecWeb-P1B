@@ -1,0 +1,75 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+  <main class="container">
+    <!-- method="post" foi removido apenas para o exemplo funcionar sem o servidor -->
+    <form class="form-card" method="post">
+      {% csrf_token %}
+      <input type="hidden" value="postar" name="post" />
+      <input
+        class="form-card-title"
+        type="text"
+        name="titulo"
+        placeholder="Título"
+      />
+      <textarea
+        class="autoresize"
+        name="detalhes"
+        placeholder="Digite o conteúdo..."
+      ></textarea>
+      <textarea
+        class="autoresize_zero"
+        name="tag"
+        id="tag"
+        placeholder="Tag da nota"
+      ></textarea>
+      <button class="btn" type="submit">Criar</button>
+    </form>
+
+    <ul class="card-container">
+        {% for note in notes %}
+        <li class="card">
+          <div class="top-buttons">
+            <form class="form-delete" action="delete" method="post">
+              {% csrf_token %}
+              <input type="hidden" id="{{note.id}}" value="{{note.id}}" name="id" />
+              <input type="hidden" id={{note.tag}} value={{note.tag}}  name="tag"/>
+              <button class="del_button" type="submit">x</button>
+            </form>
+            <form action="list_of_tags" method="POST">
+              {% csrf_token %}
+              <input type="hidden" id={{note.tag}} value={{note.tag}}  name="tag"/>
+              <button class="tag_button" type="submit">Tag:{{note.tag}}</button>
+            </form>
+          </div>
+        <div>
+            <form method="post" action="edit">
+              {% csrf_token %}
+                <input type="hidden" value="{{note.id}}" name="id" id="{{note.id}}"/>
+                <textarea class="edit-title" name="newtitle">{{note.title}}
+                </textarea>
+                <textarea class="edit-details" name="newdetails">{{note.content}}</textarea>
+                <button class="edit_button" type="submit">confirmar edição</button>
+            </form>
+        </div>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+
+
+<div class="tag_page_format">
+  <form method="post" action="all_tags">
+    {% csrf_token %}
+    <button class="tag_page_button" type="submit">Tags utilizadas</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+<main class="container">
+    <!-- method="post" foi removido apenas para o exemplo funcionar sem o servidor -->
+    <ul class="card-container">
+        {% for tag in tags %}
+        <li class="card">
+            <h2 class="edit-title">Tag</h2>
+            <form method="post" action="list_of_tags">
+                {% csrf_token %}
+                <input type="hidden" id={{tag.id}} value={{tag.id}}  name="tag"/>
+                <button class="tag_details">{{tag.name}}</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+
+<div class="text">
+    <p>Clique nos números/nomes para ver as notas de suas respectivas Tags!</p>
+</div>
+{% endblock %}
