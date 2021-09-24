@@ -47,10 +47,8 @@ def delete(request):
     ID=int(id)
     note = Note.objects.get(id=ID)
     p_tag=request.POST.get('tag')
-    if p_tag is not None:
-        tag = Note.objects.filter(tag=p_tag)
-        if len(tag)==0:
-            Tag.objects.filter(name=p_tag).delete()
+    Tag.objects.all().delete()
+   
     note.delete()
     return redirect('index')
 
