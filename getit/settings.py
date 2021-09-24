@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -74,15 +75,15 @@ WSGI_APPLICATION = 'getit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'getit',
-       'USER': 'getituser',
-       'PASSWORD': 'getitsenha',
-       'HOST': 'localhost',
-       'PORT': '5432',    }
-}
+#DATABASES = {
+  #  'default': {
+  #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+   #    'NAME': 'getit',
+   #    'USER': 'getituser',
+    #   'PASSWORD': 'getitsenha',
+    #   'HOST': 'localhost',
+    #   'PORT': '5432',    }
+#}
 
 #DATABASES = {
     ##'default': {
@@ -90,6 +91,14 @@ DATABASES = {
      #   'NAME': BASE_DIR / 'db.sqlite3',
     #}
 #}
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgresql://localhost/getit?user=getituser&password=getitsenha',
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
+}
 
 
 # Password validation
