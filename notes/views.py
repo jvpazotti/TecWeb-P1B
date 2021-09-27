@@ -42,17 +42,34 @@ def edit(request):
         return render(request, 'notes/index.html', {'notes': note})
 
 
+# def delete(request):
+#     id = request.POST.get('id')
+#     ID=int(id)
+#     note = Note.objects.get(id=ID)
+#     p_tag=request.POST.get('tag')
+#     if p_tag is not None:
+#         tag = Note.objects.filter(tag=p_tag)
+#         if len(tag)==0:
+#             Tag.objects.filter(name=p_tag).delete()
+#     note.delete()
+#     return redirect('index')
+
 def delete(request):
-    id = request.POST.get('id')
-    ID=int(id)
-    note = Note.objects.get(id=ID)
-    p_tag=request.POST.get('tag')
-    if p_tag is not None:
-        tag = Note.objects.filter(tag=p_tag)
-        if len(tag)==0:
-            Tag.objects.filter(name=p_tag).delete()
-    note.delete()
-    return redirect('index')
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        tag = request.POST.get('tag')
+        Note.objects.filter(id=id).delete()
+
+        if tag is not None:
+            tag_list = Note.objects.filter(tag__name=tag)
+            if len(tag_list) == 0:
+                Tag.objects.filter(name=tag).delete()
+
+        return redirect('index')
+    else:
+        all_notes = Note.objects.all()
+        all_tags = Tag.objects.all()
+        return render(request, 'notes/index.html', {'notes': all_notes, 'tags':all_tags})
 
 def list_of_tags(request):
 
