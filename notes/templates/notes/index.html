@@ -44,11 +44,9 @@
               <input type="hidden" id={{note.tag}} value={{note.tag}}  name="tag"/>
               <button class="del_button" type="submit">x</button>
             </form>
-            <form action="list_of_tags" method="POST">
-              {% csrf_token %}
-              <input type="hidden" id={{note.tag}} value={{note.tag}}  name="tag"/>
-              <button class="tag_button" type="submit">Tag:{{note.tag}}</button>
-            </form>
+            <div action="list_of_tags">
+              <p class="tag_button">Tag:{{note.tag}}</p>
+            </div>
           </div>
         <div>
             <form method="post" action="edit">
