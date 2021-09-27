@@ -85,20 +85,20 @@ WSGI_APPLICATION = 'getit.wsgi.application'
 #       'PORT': '5432',    }
 # }
 
-DATABASES = {
-    'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgresql://localhost/getit?user=getituser&password=getitsenha',
-#         conn_max_age=600,
-#         ssl_require=not DEBUG
-#     )
+#     'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgresql://localhost/getit?user=getituser&password=getitsenha',
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
+}
 
 
 # Password validation
