@@ -59,11 +59,12 @@ def delete(request):
         id = request.POST.get('id')
         tag = request.POST.get('tag')
         Note.objects.filter(id=id).delete()
+        Tag.objects.all().delete()
 
-        if tag is not None:
-            tag_list = Note.objects.filter(tag__name=tag)
-            if len(tag_list) == 0:
-                Tag.objects.filter(name=tag).delete()
+        # if tag is not None:
+        #     tag_list = Note.objects.filter(tag__name=tag)
+        #     if len(tag_list) == 0:
+        #         Tag.objects.filter(name=tag).delete()
 
         return redirect('index')
     else:
